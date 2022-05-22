@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/users/principal"/>
+    <qresource prefix="/image/login"/>
+    <qresource prefix="/">
+        <file>images/icone.jpg</file>
+        <file>images/actors-principal.jpg</file>
+        <file>images/films-principal.jpg</file>
+        <file>images/users-principal.jpg</file>
+    </qresource>
+</RCC>

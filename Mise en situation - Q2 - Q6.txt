@@ -1,0 +1,178 @@
+          
+          
+         cais 
+                Mise en situation et 
+         Guide lg            travail 
+          
+                                    
+                                    
+                     Programmation 
+                                    
+                                    
+               Évaluation combinée des compétences 00Q2-00Q6 
+               Technique de l’informatique – Gestion de réseaux 
+          Techniques de l’informatique – Développement d’applications 
+          
+          
+                                 Nom du candidat :
+                                 Date : 
+          
+          
+                          
+                                Programmation – Compétence 00Q2-00Q6 
+                              Technique de l’informatique – Gestion de réseaux  
+                           Techniques de l’informatique – Développement d’applications 
+            
+         
+           Pour ce bloc, vous pouvez utiliser le langage de programmation que vous désirez (exemple : 
+           C#, Java ou Python). Le langage doit être orienté objet et être en mesure de produire une 
+           interface graphique riche. 
+            
+           Mise en situation 
+           Vous travaillez au sein d’une entreprise qui veut se lancer dans la diffusion de contenu en 
+           ligne. Cette compagnie espère que d’ici quelques années, elle sera en mesure de 
+           compétitionner des compagnies comme Netflix. 
+            
+           Votre application n’aura pas à interagir avec une base de données pour ce bloc. 
+            
+           Description de l’évaluation 
+           La conception de votre programme est importante et devrait être compatible avec les 
+           principes orientés-objet et être facile à comprendre par un programmeur qui n'a jamais 
+           participé au développement du programme demandé. 
+            
+           Votre programme doit être robuste et il ne doit pas supposer que seules les entrées valides 
+           sont fournies. Les utilisateurs peuvent faire des erreurs, et le logiciel doit attraper les erreurs 
+           commises par les utilisateurs et fournir une rétroaction qui informe les utilisateurs des erreurs 
+           et ce qu'ils doivent faire pour les corriger. 
+            
+           Votre programme devrait pouvoir fonctionner sur des machines différentes de celles que vous 
+           avez utilisées pour le développement. Vous êtes responsable de veiller à ce que le programme 
+           tourne sur des machines différentes avant la remise de votre travail. 
+            
+           Bien entendu votre code doit être très bien documenté. 
+                                
+                                                                   Page 2 sur 5 
+           Tous droits réservés (RAC Cégep Limoilou) 
+            
+                                                     Programmation – Compétence 00Q2-00Q6 
+                                                  Technique de l’informatique – Gestion de réseaux  
+                                             Techniques de l’informatique – Développement d’applications 
+                   
+             
+                  Étape 1 : Produire un diagramme de classe 
+                  Votre première tâche sera de faire le diagramme de classe avec un outil de votre choix.  
+                   
+                  Description des classes : 
+                  Personne 
+                       •   Contiens les informations de base : nom, prénom, sexe 
+                  Client (hérite de Personne) (les clients abonnés au service de l’entreprise) 
+                       •   Contiens les informations: date inscription, courriel, password 
+                  Acteur (hérite de Personne) (les acteurs qui ont un rôle dans un film) 
+                       •   Contient les informations: nom personnage, début emploi, fin emploi, cachet 
+                  Employe (hérite de Personne) (les employés de l’entreprise…eux qui utiliseront ce système) 
+                       •   Contiens les informations: date embauche, code utilisateur, password, type accès 
+                  CarteCredit 
+                       •   Contient le numéro de carte, date expiration et code secret. 
+                  Film 
+                       •   Contiens le nom, la durée, une description. 
+                  Categorie 
+                       •   Contiens le nom, une description. 
+                  Vous pouvez modifier les classes ou en ajouter si vous croyez que cela sera utile pour votre 
+                  application. 
+                   
+                  Contraintes : 
+                      •    Un client peut avoir plus d’une carte de crédit.  
+                      •    Un film peut avoir plus d’une catégorie. 
+                      •    Un acteur peut avoir joué dans plusieurs films. 
+                            
+                  Inclure un imprime écran de votre modèle de classe et le fichier dans la remise finale 
+                                                    
+                                                                                                              Page 3 sur 5 
+                  Tous droits réservés (RAC Cégep Limoilou) 
+                   
+                                                     Programmation – Compétence 00Q2-00Q6 
+                                                  Technique de l’informatique – Gestion de réseaux  
+                                             Techniques de l’informatique – Développement d’applications 
+                   
+             
+                  Étape 2 : Mise en place du gestionnaire de code source  
+                  Vous devez utiliser un gestionnaire de code source pour votre application (Git, Bitbucket, 
+                  TurtoiseSVN, etc.). Mettez en place votre environnement avant de commencer. 
+                   
+                  Inclure la preuve d’utilisation d’un gestionnaire de code source dans votre remise finale et 
+                  montrer des exemples d’utilisation des principales fonctionnalités du gestionnaire. 
+                   
+                  Étape 3 : Création de l’application 
+                  Vous n’avez pas à utiliser une base de données dans votre application. Donc les valeurs 
+                  peuvent être « hardcodé » directement dans le code. 
+                   
+                  Description des fenêtres de l’application : 
+                  Login : 
+                  Au démarrage de votre application, l’employé est invité à entrer son code utilisateur et son 
+                  mot de passe. Pensez à la sécurité (password masqué, encryption, etc.). 
+                   
+                  Il existe deux accès différents pour les employés. Accès total et accès lecture. Les employés 
+                  avec « accès lecture » peuvent simplement faire de la consultation. Aucune modification n’est 
+                  autorisée. 
+                   
+                  Fenêtre principale : 
+                  Une fois connecté, la fenêtre principale affiche une liste ou tableau avec le nom, prénom, 
+                  courriel des clients. 
+                   
+                  Une autre liste ou tableau affiche le nom des films, la durée et ses catégories (ex : Comédie, 
+                  Action). On peut également voir la liste des acteurs pour un film (Infobulle ou autre). 
+                   
+                  Il y a un menu qui permet de quitter ou de se déconnecter (réaffiche le login). 
+                   
+                  Bouton pour créer un client. Au clic du bouton la fenêtre création client s’affiche. 
+                   
+                  Bouton pour modifier un client sélectionné. Au clic du bouton la fenêtre modification client 
+                  s’affiche. 
+                   
+                  Bouton pour supprimer un client sélectionné. Au clic du bouton, une fenêtre de confirmation 
+                  de suppression s’affiche. 
+                   
+                  Fenêtre création du client : 
+                  Tous les champs nécessaires à la création sont présents. N’oubliez pas de faire la validation 
+                  des données entrées. 
+                       •   Le courriel d’un client doit être unique. 
+                       •   Mot de passe 8 caractères min. 
+                                                                                                              Page 4 sur 5 
+                  Tous droits réservés (RAC Cégep Limoilou) 
+                   
+                                                     Programmation – Compétence 00Q2-00Q6 
+                                                  Technique de l’informatique – Gestion de réseaux  
+                                             Techniques de l’informatique – Développement d’applications 
+                   
+             
+                  Fenêtre modification du client : 
+                  Tous les champs nécessaires à la modification sont présents. N’oubliez pas de faire la 
+                  validation des données entrées. 
+                       •   Le courriel d’un client doit être unique. 
+                       •   Mot de passe 8 caractères min. 
+                   
+                  Vous devez utiliser les principes orientés objet comme l’héritage lorsque nécessaire. Même si 
+                  la sauvegarde dans la une base de données n’est pas nécessaire, toutes les étapes jusqu’à la 
+                  sauvegarde/modification doivent être présente. 
+                   
+                  N’oubliez pas d’ajouter les messages de confirmation et d’erreur (try…catch). 
+                                                                        
+                  Étape 4 : Création des essais unitaires 
+                  Vous devez ajouter des jeux d’essais unitaires pour vos méthodes principales. 
+                   
+                  Inclure le code source dans votre remise finale  
+                   
+                  Inclure un le code source, dans votre remise finale, qui permet d’exécuter directement votre 
+                  application. 
+                   
+                  Vous pouvez utiliser cette vidéo pour vous aider : 
+                  https://www.youtube.com/watch?v=D8wdAYwH-ng  
+                                                                        
+                   
+                   
+                   
+                   
+                   
+                                                                                                              Page 5 sur 5 
+                  Tous droits réservés (RAC Cégep Limoilou) 
+                   
