@@ -18,8 +18,8 @@ class Ui_CreateClientWindow(object):
         if not CreateClientWindow.objectName():
             CreateClientWindow.setObjectName(u"CreateClientWindow")
         CreateClientWindow.resize(800, 600)
-        self.CreateMenu = QAction(CreateClientWindow)
-        self.CreateMenu.setObjectName(u"CreateMenu")
+        self.createDecon = QAction(CreateClientWindow)
+        self.createDecon.setObjectName(u"createDecon")
         self.centralwidget = QWidget(CreateClientWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.CreationClient = QFrame(self.centralwidget)
@@ -182,7 +182,7 @@ class Ui_CreateClientWindow(object):
         CreateClientWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuMenu.menuAction())
-        self.menuMenu.addAction(self.CreateMenu)
+        self.menuMenu.addAction(self.createDecon)
 
         self.retranslateUi(CreateClientWindow)
 
@@ -191,7 +191,7 @@ class Ui_CreateClientWindow(object):
 
     def retranslateUi(self, CreateClientWindow):
         CreateClientWindow.setWindowTitle(QCoreApplication.translate("CreateClientWindow", u"MainWindow", None))
-        self.CreateMenu.setText(QCoreApplication.translate("CreateClientWindow", u"Se deconecter", None))
+        self.createDecon.setText(QCoreApplication.translate("CreateClientWindow", u"Se deconecter", None))
         self.label_6.setText(QCoreApplication.translate("CreateClientWindow", u"Ecrire a nouveau votre mot de passe", None))
         self.label_7.setText(QCoreApplication.translate("CreateClientWindow", u"Ecrire votre mot de passe", None))
         self.label_8.setText(QCoreApplication.translate("CreateClientWindow", u"Courriel", None))

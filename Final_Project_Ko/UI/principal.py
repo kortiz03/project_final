@@ -18,13 +18,13 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1313, 622)
-        self.mainMenu = QAction(MainWindow)
-        self.mainMenu.setObjectName(u"mainMenu")
+        self.mainDecon = QAction(MainWindow)
+        self.mainDecon.setObjectName(u"mainDecon")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(10, 270, 441, 261))
+        self.frame.setGeometry(QRect(10, 270, 441, 281))
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.mainListeUser = QTreeWidget(self.frame)
@@ -33,13 +33,17 @@ class Ui_MainWindow(object):
         self.mainListeUser.setGeometry(QRect(10, 20, 431, 192))
         self.mainUserAdd = QPushButton(self.frame)
         self.mainUserAdd.setObjectName(u"mainUserAdd")
-        self.mainUserAdd.setGeometry(QRect(40, 220, 51, 29))
+        self.mainUserAdd.setGeometry(QRect(40, 250, 51, 29))
         self.mainUserMod = QPushButton(self.frame)
         self.mainUserMod.setObjectName(u"mainUserMod")
-        self.mainUserMod.setGeometry(QRect(110, 220, 61, 29))
+        self.mainUserMod.setGeometry(QRect(110, 250, 61, 29))
         self.mainUserDel = QPushButton(self.frame)
         self.mainUserDel.setObjectName(u"mainUserDel")
-        self.mainUserDel.setGeometry(QRect(200, 220, 91, 29))
+        self.mainUserDel.setGeometry(QRect(200, 250, 91, 29))
+        self.mainInfo = QLabel(self.frame)
+        self.mainInfo.setObjectName(u"mainInfo")
+        self.mainInfo.setGeometry(QRect(18, 220, 411, 20))
+        self.mainInfo.setAlignment(Qt.AlignCenter)
         self.frame_2 = QFrame(self.centralwidget)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setGeometry(QRect(470, 280, 401, 221))
@@ -79,7 +83,7 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menubar)
 
         self.menubar.addAction(self.menuMenu.menuAction())
-        self.menuMenu.addAction(self.mainMenu)
+        self.menuMenu.addAction(self.mainDecon)
 
         self.retranslateUi(MainWindow)
 
@@ -88,7 +92,10 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.mainMenu.setText(QCoreApplication.translate("MainWindow", u"Quitter", None))
+        self.mainDecon.setText(QCoreApplication.translate("MainWindow", u"Se deconecter", None))
+#if QT_CONFIG(tooltip)
+        self.mainDecon.setToolTip(QCoreApplication.translate("MainWindow", u"Se deconecter", None))
+#endif // QT_CONFIG(tooltip)
         ___qtreewidgetitem = self.mainListeUser.headerItem()
         ___qtreewidgetitem.setText(4, QCoreApplication.translate("MainWindow", u"Type d'Access", None));
         ___qtreewidgetitem.setText(3, QCoreApplication.translate("MainWindow", u"Courriel", None));
@@ -108,6 +115,7 @@ class Ui_MainWindow(object):
         self.mainUserAdd.setText(QCoreApplication.translate("MainWindow", u"Ajouter", None))
         self.mainUserMod.setText(QCoreApplication.translate("MainWindow", u"Modifier", None))
         self.mainUserDel.setText(QCoreApplication.translate("MainWindow", u"Supprimer", None))
+        self.mainInfo.setText("")
         ___qtreewidgetitem2 = self.mainListeFIlms.headerItem()
         ___qtreewidgetitem2.setText(2, QCoreApplication.translate("MainWindow", u"Categorie Film", None));
         ___qtreewidgetitem2.setText(1, QCoreApplication.translate("MainWindow", u"Dur\u00e9e Film", None));

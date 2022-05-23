@@ -165,9 +165,9 @@
     <widget class="QLabel" name="loginInfo">
      <property name="geometry">
       <rect>
-       <x>98</x>
+       <x>78</x>
        <y>60</y>
-       <width>271</width>
+       <width>301</width>
        <height>20</height>
       </rect>
      </property>
@@ -191,7 +191,7 @@
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="menuLogin"/>
+    <addaction name="loginDecon"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -202,9 +202,12 @@
    <addaction name="menuMenu"/>
    <addaction name="menuView"/>
   </widget>
-  <action name="menuLogin">
+  <action name="loginDecon">
    <property name="text">
-    <string>Close</string>
+    <string>Quitter</string>
+   </property>
+   <property name="toolTip">
+    <string>Quitter</string>
    </property>
   </action>
  </widget>

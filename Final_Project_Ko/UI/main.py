@@ -18,8 +18,8 @@ class Ui_LoginWindow(object):
         if not LoginWindow.objectName():
             LoginWindow.setObjectName(u"LoginWindow")
         LoginWindow.resize(800, 441)
-        self.menuLogin = QAction(LoginWindow)
-        self.menuLogin.setObjectName(u"menuLogin")
+        self.loginDecon = QAction(LoginWindow)
+        self.loginDecon.setObjectName(u"loginDecon")
         self.centralwidget = QWidget(LoginWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame = QFrame(self.centralwidget)
@@ -92,7 +92,7 @@ class Ui_LoginWindow(object):
         self.label_5.setGeometry(QRect(220, 40, 71, 16))
         self.loginInfo = QLabel(self.frame)
         self.loginInfo.setObjectName(u"loginInfo")
-        self.loginInfo.setGeometry(QRect(98, 60, 271, 20))
+        self.loginInfo.setGeometry(QRect(78, 60, 301, 20))
         LoginWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(LoginWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -108,7 +108,7 @@ class Ui_LoginWindow(object):
 
         self.menubar.addAction(self.menuMenu.menuAction())
         self.menubar.addAction(self.menuView.menuAction())
-        self.menuMenu.addAction(self.menuLogin)
+        self.menuMenu.addAction(self.loginDecon)
         self.menuMenu.addSeparator()
 
         self.retranslateUi(LoginWindow)
@@ -121,7 +121,10 @@ class Ui_LoginWindow(object):
 
     def retranslateUi(self, LoginWindow):
         LoginWindow.setWindowTitle(QCoreApplication.translate("LoginWindow", u"MainWindow", None))
-        self.menuLogin.setText(QCoreApplication.translate("LoginWindow", u"Close", None))
+        self.loginDecon.setText(QCoreApplication.translate("LoginWindow", u"Quitter", None))
+#if QT_CONFIG(tooltip)
+        self.loginDecon.setToolTip(QCoreApplication.translate("LoginWindow", u"Quitter", None))
+#endif // QT_CONFIG(tooltip)
         self.loginOk.setText(QCoreApplication.translate("LoginWindow", u"Ok", None))
         self.loginCancel.setText(QCoreApplication.translate("LoginWindow", u"Effacer", None))
         self.label_4.setText(QCoreApplication.translate("LoginWindow", u"<html><head/><body><p><img src=\":/images/icone.jpg\"/></p></body></html>", None))

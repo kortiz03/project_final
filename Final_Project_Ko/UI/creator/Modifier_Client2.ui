@@ -47,7 +47,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="modifierPassword"/>
+       <widget class="QLineEdit" name="modifierPassword">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -161,7 +165,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="modifierPasswordVerify"/>
+       <widget class="QLineEdit" name="modifierPasswordVerify">
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -183,7 +191,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="modifierNom_2"/>
+       <widget class="QLineEdit" name="modifierUsager"/>
       </item>
      </layout>
     </widget>
@@ -205,7 +213,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="createType">
+       <widget class="QComboBox" name="modifierType">
         <item>
          <property name="text">
           <string>Accès Lecture</string>
@@ -234,6 +242,22 @@
      <string>Modifier Client</string>
     </property>
    </widget>
+   <widget class="QLabel" name="modifierInfo">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>100</y>
+      <width>331</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -248,17 +272,28 @@
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="menuCreation"/>
+    <addaction name="modifierDecon"/>
    </widget>
    <addaction name="menuMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="menuCreation">
+  <action name="modifierDecon">
    <property name="text">
     <string>Se deconecter</string>
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>modifierUsager</tabstop>
+  <tabstop>modifierCourriel</tabstop>
+  <tabstop>modifierNom</tabstop>
+  <tabstop>modifierPrenom</tabstop>
+  <tabstop>modifierPassword</tabstop>
+  <tabstop>modifierPasswordVerify</tabstop>
+  <tabstop>modifierType</tabstop>
+  <tabstop>modifierOk</tabstop>
+  <tabstop>modifierCancel</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

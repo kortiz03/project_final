@@ -288,12 +288,12 @@
     <property name="title">
      <string>Menu</string>
     </property>
-    <addaction name="CreateMenu"/>
+    <addaction name="createDecon"/>
    </widget>
    <addaction name="menuMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="CreateMenu">
+  <action name="createDecon">
    <property name="text">
     <string>Se deconecter</string>
    </property>

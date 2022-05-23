@@ -1,5 +1,7 @@
+import sys
 import json
 import PySide2.QtWidgets as qtw
+import PySide2.QtCore as qtw_core
 from UI.main import Ui_LoginWindow as UI_login
 from UI.Creation_Client2 import Ui_CreateClientWindow as UI_UserAdd
 from UI.Modifier_Client2 import Ui_CreationWindow as UI_UserMod
@@ -38,6 +40,7 @@ class LoginWindow(qtw.QMainWindow, UI_login):
         self.setupUi(self)
         self._user_verified = False
         self.loginOk.clicked.connect(self.load_main_wd)
+        self.loginDecon.triggered.connect(sys.exit)
         self.main_window = None
         self.user = None
 
@@ -54,7 +57,6 @@ class LoginWindow(qtw.QMainWindow, UI_login):
                     self._user_verified = True
         if not self._user_verified:
             self.loginInfo.setText("Le usager, le password ou le type d'access ne sont pas valides")
-        print(self._user_verified)
 
     def load_main_wd(self):
         self.verify_user()
@@ -72,7 +74,19 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.user = user
         self.mainUserAdd.clicked.connect(self.load_add_user_wd)
+        self.mainUserMod.clicked.connect(self.load_mod_user_wd)
+        self.mainUserDel.clicked.connect(self.load_del_user_wd)
+        self.mainDecon.triggered.connect(self.deconnecter)
         self.user_add_wd = None
+        self.user_mod_wd = None
+        self.user_del_wd = None
+        self.login_wd = None
+
+    def deconnecter(self):
+        self.login_wd = LoginWindow()
+        self.login_wd.show()
+        self.close()
+
 
     def show(self):
         self.lister_usagers()
@@ -103,6 +117,24 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.user_add_wd.show()
         self.close()
 
+    def load_mod_user_wd(self):
+        item_choisi = self.mainListeUser.currentItem()
+        if item_choisi.isSelected():
+            self.user_mod_wd = UserModifyWindow(self.user, item_choisi)
+            self.user_mod_wd.show()
+            self.close()
+        else:
+            self.mainInfo.setText("Vous devez choisir l'usager a modifier")
+
+    def load_del_user_wd(self):
+        item_choisi = self.mainListeUser.currentItem()
+        if item_choisi.isSelected():
+            self.user_del_wd = UserDeleteWindow(self.user, item_choisi)
+            self.user_del_wd.show()
+            self.close()
+        else:
+            self.mainInfo.setText("Vous devez choisir l'usager a supprimer")
+
 
 class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
     def __init__(self, user, parent=None):
@@ -112,6 +144,13 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
         self.main_window = None
         self.createCancel.clicked.connect(self.cancel_add)
         self.createOk.clicked.connect(self.verifier_formulaire)
+        self.createDecon.triggered.connect(self.deconnecter)
+        self.login_wd = None
+
+    def deconnecter(self):
+        self.login_wd = LoginWindow()
+        self.login_wd.show()
+        self.close()
 
     def cancel_add(self):
         self.main_window = MainWindow(user=self.user)
@@ -163,43 +202,108 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
                 self.createInfo.setText("le nom de usager existe deja")
 
 
+class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
+    def __init__(self, user, item_choisi, parent=None):
+        super().__init__(parent)
+        self.user = user
+        self.setupUi(self)
+        self.main_window = None
+        self.item_choisi = item_choisi
+        self.modifierUsager.setText(self.item_choisi.text(0))
+        self.modifierUsager.setDisabled(True)
+        self.modifierNom.setText(self.item_choisi.text(1))
+        self.modifierPrenom.setText(self.item_choisi.text(2))
+        self.modifierCourriel.setText(self.item_choisi.text(3))
+        self.modifierCourriel.setDisabled(True)
+        combo_index = self.modifierType.findText(self.item_choisi.text(4), qtw_core.Qt.MatchExactly)
+        self.modifierType.setCurrentIndex(combo_index)
+        self.modifierCancel.clicked.connect(self.cancel_modifier)
+        self.modifierOk.clicked.connect(self.verifier_formulaire)
+        self.modifierDecon.triggered.connect(self.deconnecter)
+        self.login_wd = None
 
+    def deconnecter(self):
+        self.login_wd = LoginWindow()
+        self.login_wd.show()
+        self.close()
 
+    def cancel_modifier(self):
+        self.main_window = MainWindow(user=self.user)
+        self.main_window.show()
+        self.close()
 
+    def verifier_formulaire(self):
+        username = self.modifierUsager.text()
+        courriel = self.modifierCourriel.text()
+        nom = self.modifierNom.text()
+        prenom = self.modifierPrenom.text()
+        password = self.modifierPassword.text()
+        password_verify = self.modifierPasswordVerify.text()
+        user_type = self.modifierType.currentText()
 
+        if password != password_verify:
+            self.modifierInfo.setText("les password ne sont pas identiques")
+        else:
+            user_dict = {
+                username:
+                    {
+                        "nom": nom,
+                        "prenom": prenom,
+                        "password": password,
+                        "courriel": courriel,
+                        "type": user_type
+                    }
+            }
+            self.ajouter_usager(user_dict)
 
+    def ajouter_usager(self, user_dict):
+        with open("usager.json", 'r', encoding='utf-8') as f:
+            usager_dict = json.load(f)
+        for key, values in user_dict.items():
+            if key in usager_dict.keys():
+                if user_dict[key]["password"] == "":
+                    values["password"] = usager_dict[key]["password"]
+                usager_dict[key] = values
+                with open("usager.json", 'w', encoding='utf-8') as f:
+                    json.dump(usager_dict, f)
+                self.main_window = MainWindow(user=self.user)
+                self.main_window.show()
+                self.close()
+            else:
+                self.modifierInfo.setText("le nom de usager n'existe pas")
 
+class UserDeleteWindow(qtw.QMainWindow, UI_UserDel):
+    def __init__(self, user, item_choisi, parent=None):
+        super().__init__(parent)
+        self.user = user
+        self.setupUi(self)
+        self.main_window = None
+        self.item_choisi = item_choisi
+        self.confirmDelUsager.setText(self.item_choisi.text(0))
+        self.confirmDelNom.setText(self.item_choisi.text(1))
+        self.confirmDelPrenom.setText(self.item_choisi.text(2))
+        self.confirmDelCourriel.setText(self.item_choisi.text(3))
+        self.confirmDelCancel.clicked.connect(self.cancel_del)
+        self.confirmDelOk.clicked.connect(self.suprimer_usager)
+        self.confirmDecon.triggered.connect(self.deconnecter)
+        self.login_wd = None
 
+    def deconnecter(self):
+        self.login_wd = LoginWindow()
+        self.login_wd.show()
+        self.close()
 
+    def cancel_del(self):
+        self.main_window = MainWindow(user=self.user)
+        self.main_window.show()
+        self.close()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def suprimer_usager(self):
+        with open("usager.json", 'r', encoding='utf-8') as f:
+            usager_dict = json.load(f)
+        usager_dict.pop(self.item_choisi.text(0))
+        with open("usager.json", 'w', encoding='utf-8') as f:
+            json.dump(usager_dict, f)
+        self.main_window = MainWindow(user=self.user)
+        self.main_window.show()
+        self.close()
