@@ -11,6 +11,7 @@ from UI.Confirmation_suppresion_client2 import Ui_ConfirmerDelWindow as UI_UserD
 from UI.principal import Ui_MainWindow
 import images.image_users
 
+##Création classe Usager lequel va avoir toutes les informations du formulaire
 
 class Usager():
     ## initializacion des variables
@@ -24,7 +25,8 @@ class Usager():
         self.user_exist = False
 
     ##validation d'usager avec le dictionnaire ou les informations d'usagers sont enregistrées
-    ## utilsation exception try et except pour valider usager ave les information existant dans le dictionaire
+    ##utilsation exception try et except pour valider usager ave les informations existant dans le dictionnaire
+
     def get_user(self):
         try:
             with open("usager.json", 'r', encoding='utf-8') as f:
@@ -38,7 +40,7 @@ class Usager():
         except KeyError:
             self.user_exist = False
 
-## validation fenetre login pour usager = false
+##validation fenêtre login pour usager = false
 class LoginWindow(qtw.QMainWindow, UI_login):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -48,8 +50,9 @@ class LoginWindow(qtw.QMainWindow, UI_login):
         self.loginDecon.triggered.connect(sys.exit)
         self.main_window = None
         self.user = None
-## validation d'usager avec fonction bool qui convert une valeur booléene (true or false), donc si les informations
-## ne correspond pas il affiche un message d'erreur. Parla suite il va rester dans la fenêtre de login
+##Validation d'usager avec fonction bool qui convert une valeur booléenne (true or false). donc, si les informations
+## ne correspond pas il affiche un message d'erreur. Par la suite il va rester dans la fenêtre du login.
+
 
     def verify_user(self) -> bool:
         usager = self.loginUser.text()
@@ -71,9 +74,8 @@ class LoginWindow(qtw.QMainWindow, UI_login):
             self.main_window = MainWindow(user=self.user)
             self.main_window.show()
             self.close()
-## création classe MainWindow lequel a une fonction init qui amene les informations de parent
-## fonction show que a une if pour verifier l'accées d'usager, en cas que soit accées lecture
-## user accées type lecture donc mettre les buttons invisible
+## création classe MainWindow lequel a une fonction init qui amené les informations de parent
+## VAlidation buttons
 
 class MainWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self, user, parent=None):
@@ -88,13 +90,14 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         self.user_mod_wd = None
         self.user_del_wd = None
         self.login_wd = None
+##fonction deconecter le quel retourn au menu du login
 
     def deconnecter(self):
         self.login_wd = LoginWindow()
         self.login_wd.show()
         self.close()
 
-
+##fonction qu'affiche les usager, si trouve le type accées == lecture les autres buttons seront invisibles
     def show(self):
         self.lister_usagers()
         if self.user.acess_type == "Accès Lecture":
@@ -118,7 +121,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             self.mainListeUser.topLevelItem(compte_usagers).setText(3, values['courriel'])
             self.mainListeUser.topLevelItem(compte_usagers).setText(4, values['type'])
             compte_usagers = compte_usagers + 1
-## fonction ajout un usager sur le button ajouter, par la suite affiche un nouvel fenêtre avec le formulaire a remplir
+## fonction ajout un usager sur le button ajouter. par la suite, affiche un nouvel fenêtre avec le formulaire a remplir
     def load_add_user_wd(self):
         self.user_add_wd = UserAddWindow(self.user)
         self.user_add_wd.show()
@@ -132,6 +135,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             self.close()
         else:
             self.mainInfo.setText("Vous devez choisir l'usager a modifier")
+##fonction pour supprimir un usager lequel devra être selectionne depuis la liste, sinon affiche un message pour choisir l'usager desiré a être supprime
 
     def load_del_user_wd(self):
         item_choisi = self.mainListeUser.currentItem()
@@ -142,6 +146,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         else:
             self.mainInfo.setText("Vous devez choisir l'usager a supprimer")
 
+##Fonction pour donner fonctioonalite aux buttons ok, cancel,deconnecter dans la fenêtre
 
 class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
     def __init__(self, user, parent=None):
@@ -153,16 +158,22 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
         self.createOk.clicked.connect(self.verifier_formulaire)
         self.createDecon.triggered.connect(self.deconnecter)
         self.login_wd = None
-
+##Fonction pour activer button se deconecte. apres clicker il va se deconecter et retourner a la fenêtre de login
     def deconnecter(self):
         self.login_wd = LoginWindow()
         self.login_wd.show()
         self.close()
 
+
     def cancel_add(self):
         self.main_window = MainWindow(user=self.user)
         self.main_window.show()
         self.close()
+
+##fonction qui permet verifier le formulaire.
+##fonction if que permet verifier si les champs dans le formulaire sont vites
+##fontion elif que affiche message pour emplir les information demandées
+##fonction else peremtre enregistrer les informations dans un dictionaire et ajouter l'usager
 
     def verifier_formulaire(self):
         username = self.createUsager.text()
@@ -193,6 +204,9 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
                     }
             }
             self.ajouter_usager(user_dict)
+##fonction ajouter_usager permet ouvrir un fichier json avec les informations enregistres dans un variable f qui va être verifie a travers un for
+##fonction if permettre valider les valeurs de l'usager
+##fonction else affiche un message d'erreur car l'utilisateur existe déjà
 
     def ajouter_usager(self, user_dict):
         with open("usager.json", 'r', encoding='utf-8') as f:
@@ -208,6 +222,7 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
             else:
                 self.createInfo.setText("le nom d'usager existe deja")
 
+##Fonction pour modifier usager, permettre rentrer à nouveau les informations en laissant les champs: nom, prenom, mot de passe vide pour les remplirr
 
 class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
     def __init__(self, user, item_choisi, parent=None):
@@ -229,15 +244,20 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
         self.modifierDecon.triggered.connect(self.deconnecter)
         self.login_wd = None
 
+##Fonction pour executer action sur le button se deconecter. Il va retourner au menu login
     def deconnecter(self):
         self.login_wd = LoginWindow()
         self.login_wd.show()
         self.close()
 
+##Fonction pour executer action sur le button cancel depuis la fenêtre modifier usager
     def cancel_modifier(self):
         self.main_window = MainWindow(user=self.user)
         self.main_window.show()
         self.close()
+##fonction pour verifier formulaire de l'usager
+##fonction if que permettre comparer le password et afficher un message quand ne sont pas egales
+##fonction else peremtre verifier le dictionaire avec les informations de l'usager
 
     def verifier_formulaire(self):
         username = self.modifierUsager.text()
@@ -264,7 +284,8 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
             self.ajouter_usager(user_dict)
 ## fonction de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
 ## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
-    def validatepwd(none):
+
+    def validate_pwd(self):
         while True:
             password = input("Enter a mot de passe: ")
             if len(password) < 8:
@@ -276,6 +297,10 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
             else:
                 print("Votre mot de passe semble correct")
                 break
+##Fonction ajouter_usager - il va verifier depuis le fichier json les informations enregistres dans le dictionnaire
+##Fonction for avec l'utisation de la variable key va verifier les valeurs
+##Fonction if sert a verifier les informations de passworsd rentrees
+## Fonction else va afficher un messaje car le nom d'usager ne correspond pas
 
     def ajouter_usager(self, user_dict):
         with open("usager.json", 'r', encoding='utf-8') as f:
@@ -292,6 +317,9 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
                 self.close()
             else:
                 self.modifierInfo.setText("le nom d'usager n'existe pas")
+## Fonction pour supprimer usager
+##appel de variables
+##execution de action sur buttons
 
 class UserDeleteWindow(qtw.QMainWindow, UI_UserDel):
     def __init__(self, user, item_choisi, parent=None):
@@ -309,15 +337,19 @@ class UserDeleteWindow(qtw.QMainWindow, UI_UserDel):
         self.confirmDecon.triggered.connect(self.deconnecter)
         self.login_wd = None
 
+##Fonction pour executer action sur le button se deconecter. Il va retourner au menu login
+
     def deconnecter(self):
         self.login_wd = LoginWindow()
         self.login_wd.show()
         self.close()
+##Fonction cancel_del exécute l'action sur le button et le retournée au dernière fenêtre
 
     def cancel_del(self):
         self.main_window = MainWindow(user=self.user)
         self.main_window.show()
         self.close()
+##Fonction suprimer_usager va ouvrir le fichier json lequel contient les informations de toutes les usagers et va le supprimer
 
     def suprimer_usager(self):
         with open("usager.json", 'r', encoding='utf-8') as f:
