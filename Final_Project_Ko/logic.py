@@ -24,6 +24,7 @@ class Usager():
         self.user_exist = False
 
     ##validation d'usager avec le dictionnaire ou les informations d'usagers sont enregistrées
+    ## utilsation exception try et except pour valider usager ave les information existant dans le dictionaire
     def get_user(self):
         try:
             with open("usager.json", 'r', encoding='utf-8') as f:
@@ -37,7 +38,7 @@ class Usager():
         except KeyError:
             self.user_exist = False
 
-
+## validation fenetre login pour usager = false
 class LoginWindow(qtw.QMainWindow, UI_login):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -47,6 +48,8 @@ class LoginWindow(qtw.QMainWindow, UI_login):
         self.loginDecon.triggered.connect(sys.exit)
         self.main_window = None
         self.user = None
+## validation d'usager avec fonction bool qui convert une valeur booléene (true or false), donc si les informations
+## ne correspond pas il affiche un message d'erreur. Parla suite il va rester dans la fenêtre de login
 
     def verify_user(self) -> bool:
         usager = self.loginUser.text()
@@ -60,7 +63,7 @@ class LoginWindow(qtw.QMainWindow, UI_login):
                 if access_type == self.user.acess_type:
                     self._user_verified = True
         if not self._user_verified:
-            self.loginInfo.setText("Le usager, le password ou le type d'access ne sont pas valides")
+            self.loginInfo.setText("L'usager, le password ou le type d'access ne sont pas valides")
 
     def load_main_wd(self):
         self.verify_user()
@@ -69,7 +72,7 @@ class LoginWindow(qtw.QMainWindow, UI_login):
             self.main_window.show()
             self.close()
 ## création classe MainWindow lequel a une fonction init qui amene les informations de parent
-## fonction show que a une if pour verifier l'accées du usager, en cas que soit accées lecture
+## fonction show que a une if pour verifier l'accées d'usager, en cas que soit accées lecture
 ## user accées type lecture donc mettre les buttons invisible
 
 class MainWindow(qtw.QMainWindow, Ui_MainWindow):
@@ -100,7 +103,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             self.mainUserDel.setVisible(False)
         qtw.QMainWindow.show(self)
 ## creation fonction lister_usager pour remplir la liste que va afficher les utilisateurs et ses atributes
-## ajout variable toplevelitem lequel ajoterais chaque item dans la liste avec son valeur
+## ajout variable toplevelitem lequel ajouterais chaque item dans la liste avec son valeur
 
     def lister_usagers(self):
         self.mainListeUser.clear()
@@ -115,12 +118,12 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
             self.mainListeUser.topLevelItem(compte_usagers).setText(3, values['courriel'])
             self.mainListeUser.topLevelItem(compte_usagers).setText(4, values['type'])
             compte_usagers = compte_usagers + 1
-
+## fonction ajout un usager sur le button ajouter, par la suite affiche un nouvel fenêtre avec le formulaire a remplir
     def load_add_user_wd(self):
         self.user_add_wd = UserAddWindow(self.user)
         self.user_add_wd.show()
         self.close()
-
+## Fonction pour modifier un usager, liste les usager, verifi si l'usager a choisi un usager si non affiche une message pour choisir un usager
     def load_mod_user_wd(self):
         item_choisi = self.mainListeUser.currentItem()
         if item_choisi.isSelected():
@@ -177,7 +180,7 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
         elif password == "":
             self.createInfo.setText("Vous devez founir un mot de passe")
         elif password != password_verify:
-            self.createInfo.setText("les password ne sont pas identiques")
+            self.createInfo.setText("le password ne sont pas identiques")
         else:
             user_dict = {
                 username:
@@ -203,7 +206,7 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
                 self.main_window.show()
                 self.close()
             else:
-                self.createInfo.setText("le nom de usager existe deja")
+                self.createInfo.setText("le nom d'usager existe deja")
 
 
 class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
@@ -259,6 +262,20 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
                     }
             }
             self.ajouter_usager(user_dict)
+## fonction de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
+## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
+    def validatepwd(none):
+        while True:
+            password = input("Enter a mot de passe: ")
+            if len(password) < 8:
+                print("Assurez-vous que votre mot de passe est au moins 8 lettres")
+            elif not password.isdigit():
+                print("Assurez-vous que votre mot de passe contient un numéro")
+            elif not password.isupper():
+                print("Assurez-vous que votre mot de passe contient une majuscule")
+            else:
+                print("Votre mot de passe semble correct")
+                break
 
     def ajouter_usager(self, user_dict):
         with open("usager.json", 'r', encoding='utf-8') as f:
@@ -274,7 +291,7 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
                 self.main_window.show()
                 self.close()
             else:
-                self.modifierInfo.setText("le nom de usager n'existe pas")
+                self.modifierInfo.setText("le nom d'usager n'existe pas")
 
 class UserDeleteWindow(qtw.QMainWindow, UI_UserDel):
     def __init__(self, user, item_choisi, parent=None):
