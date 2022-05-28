@@ -1,3 +1,5 @@
+##Appel des librairies que j'utilise pour executer mes fênetres
+
 import sys
 import json
 import PySide2.QtWidgets as qtw
@@ -11,6 +13,7 @@ import images.image_users
 
 
 class Usager():
+    ## initializacion des variables
     def __init__(self, username):
         self.username = username
         self.nom = None
@@ -20,6 +23,7 @@ class Usager():
         self.acces_type = None
         self.user_exist = False
 
+    ##validation d'usager avec le dictionnaire ou les informations d'usagers sont enregistrées
     def get_user(self):
         try:
             with open("usager.json", 'r', encoding='utf-8') as f:
