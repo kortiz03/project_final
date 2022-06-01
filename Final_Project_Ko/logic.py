@@ -1,5 +1,6 @@
 ##Appel des librairies que j'utilise pour executer mes fênetres
 
+
 import sys
 import json
 import PySide2.QtWidgets as qtw
@@ -11,7 +12,7 @@ from UI.Confirmation_suppresion_client2 import Ui_ConfirmerDelWindow as UI_UserD
 from UI.principal import Ui_MainWindow
 import images.image_users
 
-##Création classe Usager lequel va avoir toutes les informations du formulaire
+##Création classe Usager lequel va retenir toutes les informations de l'usager
 
 class Usager():
     ## initializacion des variables
@@ -24,8 +25,8 @@ class Usager():
         self.acces_type = None
         self.user_exist = False
 
-    ##validation d'usager avec le dictionnaire ou les informations d'usagers sont enregistrées
-    ##utilsation exception try et except pour valider usager ave les informations existant dans le dictionnaire
+    ##elle va chercher dans le fcichier jason les informations et la retourne comme dictionaire.
+    ##utilsation  try et except pour valider l'usager manquante
 
     def get_user(self):
         try:
@@ -40,7 +41,7 @@ class Usager():
         except KeyError:
             self.user_exist = False
 
-##validation fenêtre login pour usager = false
+##validation fenêtre login pour usager qui va charger la fênetre
 class LoginWindow(qtw.QMainWindow, UI_login):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -74,8 +75,7 @@ class LoginWindow(qtw.QMainWindow, UI_login):
             self.main_window = MainWindow(user=self.user)
             self.main_window.show()
             self.close()
-## création classe MainWindow lequel a une fonction init qui amené les informations de parent
-## VAlidation buttons
+## création classe MainWindow lequel est une clase herite de qtcreator qui va generer le UI
 
 class MainWindow(qtw.QMainWindow, Ui_MainWindow):
     def __init__(self, user, parent=None):
@@ -146,7 +146,7 @@ class MainWindow(qtw.QMainWindow, Ui_MainWindow):
         else:
             self.mainInfo.setText("Vous devez choisir l'usager a supprimer")
 
-##Fonction pour donner fonctioonalite aux buttons ok, cancel,deconnecter dans la fenêtre
+##Fonction pour donner fonctionalite aux buttons ok, cancel,deconnecter dans la fenêtre
 
 class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
     def __init__(self, user, parent=None):
@@ -170,9 +170,26 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
         self.main_window.show()
         self.close()
 
-##fonction qui permet verifier le formulaire.
+        ## fonction de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
+        ## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
+
+    def validate_pwd(self, pwd):
+        password = pwd
+        valide = False
+        if len(password) < 8:
+            self.createInfo.setText("Assurez-vous que votre mot de passe est au moins 8 lettres")
+        elif not password.isdigit():
+            self.createInfo.setText("Assurez-vous que votre mot de passe contient un numéro")
+        elif not password.isupper():
+            self.createInfo.setText("Assurez-vous que votre mot de passe contient une majuscule")
+        else:
+            self.createInfo.setText("Votre mot de passe semble correct")
+            valide = True
+        return valide
+
+        ##fonction qui permet verifier le formulaire.
 ##fonction if que permet verifier si les champs dans le formulaire sont vites
-##fontion elif que affiche message pour emplir les information demandées
+##fontion elif que affiche message pour remplir les information demandées
 ##fonction else peremtre enregistrer les informations dans un dictionaire et ajouter l'usager
 
     def verifier_formulaire(self):
@@ -192,6 +209,8 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
             self.createInfo.setText("Vous devez founir un mot de passe")
         elif password != password_verify:
             self.createInfo.setText("le password ne sont pas identiques")
+        elif not self.validate_pwd(password):
+            pass
         else:
             user_dict = {
                 username:
@@ -207,6 +226,7 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
 ##fonction ajouter_usager permet ouvrir un fichier json avec les informations enregistres dans un variable f qui va être verifie a travers un for
 ##fonction if permettre valider les valeurs de l'usager
 ##fonction else affiche un message d'erreur car l'utilisateur existe déjà
+##ouvre un fichier jsaon pour lire, verifie les informations par la suite l'ouvre a nouveau pour l'Écrire a nouveau
 
     def ajouter_usager(self, user_dict):
         with open("usager.json", 'r', encoding='utf-8') as f:
@@ -222,7 +242,7 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
             else:
                 self.createInfo.setText("le nom d'usager existe deja")
 
-##Fonction pour modifier usager, permettre rentrer à nouveau les informations en laissant les champs: nom, prenom, mot de passe vide pour les remplirr
+##Méthode pour modifier usager, permettre rentrer à nouveau les informations en laissant les champs: nom, prenom, mot de passe vide pour les remplirr
 
 class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
     def __init__(self, user, item_choisi, parent=None):
@@ -282,21 +302,7 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
                     }
             }
             self.ajouter_usager(user_dict)
-## fonction de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
-## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
 
-    def validate_pwd(self):
-        while True:
-            password = input("Enter a mot de passe: ")
-            if len(password) < 8:
-                print("Assurez-vous que votre mot de passe est au moins 8 lettres")
-            elif not password.isdigit():
-                print("Assurez-vous que votre mot de passe contient un numéro")
-            elif not password.isupper():
-                print("Assurez-vous que votre mot de passe contient une majuscule")
-            else:
-                print("Votre mot de passe semble correct")
-                break
 ##Fonction ajouter_usager - il va verifier depuis le fichier json les informations enregistres dans le dictionnaire
 ##Fonction for avec l'utisation de la variable key va verifier les valeurs
 ##Fonction if sert a verifier les informations de passworsd rentrees
