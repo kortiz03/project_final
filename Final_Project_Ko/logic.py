@@ -24,9 +24,8 @@ class Usager():
         self.courriel = None
         self.acces_type = None
         self.user_exist = False
-
-    ##elle va chercher dans le fcichier jason les informations et la retourne comme dictionaire.
-    ##utilsation  try et except pour valider l'usager manquante
+##elle va chercher dans le fcichier jason les informations et la retourne comme dictionaire.
+##utilsation  try et except pour valider l'usager manquante
 
     def get_user(self):
         try:
@@ -170,8 +169,8 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
         self.main_window.show()
         self.close()
 
-        ## fonction de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
-        ## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
+## Méethode de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
+## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
 
     def validate_pwd(self, pwd):
         password = pwd
@@ -223,7 +222,7 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
                     }
             }
             self.ajouter_usager(user_dict)
-##fonction ajouter_usager permet ouvrir un fichier json avec les informations enregistres dans un variable f qui va être verifie a travers un for
+##Méthode ajouter_usager permet ouvrir un fichier json avec les informations enregistres dans un variable f qui va être verifie a travers un for
 ##fonction if permettre valider les valeurs de l'usager
 ##fonction else affiche un message d'erreur car l'utilisateur existe déjà
 ##ouvre un fichier jsaon pour lire, verifie les informations par la suite l'ouvre a nouveau pour l'Écrire a nouveau
@@ -276,7 +275,7 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
         self.main_window.show()
         self.close()
 
-## fonction de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
+## Méthode de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
 ## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
 
     def validate_pwd(self, pwd):
