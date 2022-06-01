@@ -178,9 +178,9 @@ class UserAddWindow(qtw.QMainWindow, UI_UserAdd):
         valide = False
         if len(password) < 8:
             self.createInfo.setText("Assurez-vous que votre mot de passe est au moins 8 lettres")
-        elif not password.isdigit():
+        elif not True if True in [char.isdigit() for char in password] else False:
             self.createInfo.setText("Assurez-vous que votre mot de passe contient un numéro")
-        elif not password.isupper():
+        elif not True if True in [char.isupper() for char in password] else False:
             self.createInfo.setText("Assurez-vous que votre mot de passe contient une majuscule")
         else:
             self.createInfo.setText("Votre mot de passe semble correct")
@@ -275,7 +275,25 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
         self.main_window = MainWindow(user=self.user)
         self.main_window.show()
         self.close()
-##fonction pour verifier formulaire de l'usager
+
+## fonction de validation password minimum 8 caracteres, utilisation de la fonction while pour lui permettre rentrer valeur.
+## fonction if pour valider les information rentres corespondent, sinon affiche un message avec l'erreur
+
+    def validate_pwd(self, pwd):
+        password = pwd
+        valide = False
+        if len(password) < 8:
+            self.modifierInfo.setText("Assurez-vous que votre mot de passe est au moins 8 lettres")
+        elif not True if True in [char.isdigit() for char in password] else False:
+            self.modifierInfo.setText("Assurez-vous que votre mot de passe contient un numéro")
+        elif not True if True in [char.isupper() for char in password] else False:
+            self.modifierInfo.setText("Assurez-vous que votre mot de passe contient une majuscule")
+        else:
+            self.modifierInfo.setText("Votre mot de passe semble correct")
+            valide = True
+        return valide
+
+    ##fonction pour verifier formulaire de l'usager
 ##fonction if que permettre comparer le password et afficher un message quand ne sont pas egales
 ##fonction else peremtre verifier le dictionaire avec les informations de l'usager
 
@@ -290,6 +308,8 @@ class UserModifyWindow(qtw.QMainWindow, UI_UserMod):
 
         if password != password_verify:
             self.modifierInfo.setText("les password ne sont pas identiques")
+        elif not self.validate_pwd(password):
+            pass
         else:
             user_dict = {
                 username:
